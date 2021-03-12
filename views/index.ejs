@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Trainer</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+</head>
+<style>
+    /* body{  */
+        /* background-color: rgba(175, 12, 12, 0.945); */
+        /* background-image: url('/images/pexels-karolina-grabowska-4386404.jpg');   */
+        /* background-size: 100%;  */
+    /* } */
+    .container{
+        margin-left: 200px;
+        margin-top: 40px;
+    }
+    .list{
+        display: inline;
+        margin: 20px;
+        padding: 7px;
+        border: solid black 5px;
+        border-radius: 10px;
+        font-size: 30px;
+        font-weight: bold;
+        background-color: white;
+        cursor: pointer;
+        color:black;
+    }
+    .list:hover{
+        color: rgb(235, 36, 36)
+    }
+    .rules{
+        margin-top: 40px;
+        margin-left: 100px;
+        padding: 15px;
+        font-size: 50px;
+        font-weight: lighter; 
+        font-family: 'Creepster', cursive;
+        color: white
+    }
+    .middle{
+        background-color: rgba(0, 0, 0, 0.774);
+    }
+    .features{
+        /* display: inline-block; */
+        width: 600px;
+        height: fit-content;
+        border: solid black 8px;
+        padding: 10px;
+        margin: 30px;
+        margin-left: 70px;  
+        text-align: center;
+        float: left;
+    }
+    .feat{
+        display: block;
+        font-size: 30px;    
+        margin: 25px;
+        padding: 2px;
+        /* margin-left: 400px; */
+        font-weight: bold;
+        color: rgb(216, 10, 10);
+        border: solid black 2px; border-radius: 4px;
+        margin-left: 0px;
+    }
+    #backgroundImage{z-index: 1;} 
+
+#backgroundImage:before {
+   content: "";
+   position: absolute;
+   z-index: -1;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   background-image: url(/images/pexels-pixabay-47344.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    opacity: 0.3;
+    filter:alpha(opacity=40);
+    height:100%;
+    width:100%;  
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+a:hover{
+    color: rgb(235, 36, 36)
+}
+.login{
+    width: 400px;
+    /* background: #ffff; */
+    margin-top: 120px;
+    margin-left: 250px;
+    height: fit-content;
+    border: solid black 8px;
+    padding: 10px;
+    text-align: center;
+}
+.input{
+    margin: 15px;
+    padding: 4px;
+    display: block;
+    margin-left: 120px;
+    margin-top: 22px;
+    text-align: center;
+}
+.register{
+    font-size: 30px;
+    color: purple;
+    border: solid black 4px;
+}
+.toggle{
+    margin : 10px;
+    margin-top: 14px;
+    padding: 6px;
+    color: red;
+    cursor: pointer;
+    background: black;
+    font-size: 22px;
+    font-style: italic;
+    font-weight: bolder;
+}
+</style>
+<body>
+    <div id="backgroundImage">
+
+    </div> 
+    <div class="container">
+        <ul class="ul1">
+            <li class="list"><a href="/" style="color:  rgb(235, 36, 36);"> Home</a></li>
+            <li class="list"><a href="/Live">Stock Rates</a></li>
+            <li class="list"><a href="/portfolio">Portfolio</a></li>
+            <li class="list"><a href="/transaction">Transactions</a></li>
+            <li class="list"><a href="/friends">Friends Performance</a></li>
+        </ul>
+    </div>
+    <div class="middle">
+    <div class="rules">
+        Welcome to stock trainer, place for practising investment!
+    </div>
+    </div>
+        <div class="features" >
+            <h1>FEATURES</h1> 
+            <ul>
+                <li class="feat">~ Register with unique id and get 10 Lakh virtual rupees for investment.</li>
+                <li class="feat">~ Get live rates of top 100 stocks of Bombay Stock Exchange(BSE).</li>
+                <li class="feat">~ Check your portfolio and history of all the transactions</li>
+                <li class="feat">~ Add and compete with friends</li>
+            </ul>
+        </div>
+        <div class="login" style="display: inline-block">
+            <button type="button" class="toggle" onclick="login()">LOGIN</button>
+            <button type="button" class="toggle" onclick="register()">REGISTER</button>
+            <form action="/login" id="first" method="POST">
+                <input type="text" class="input" placeholder="your username" required>
+                <input type="password" class="input" placeholder="your password" required>
+                <button type="submit" class="gap" style="margin: 20px; padding : 10px">
+                    Login
+                </button>
+            </form>
+            <form action="/register" id="second" method="POST">
+                <input type="text" class="input" name="name" placeholder="Name" required>
+                <input type="text" class="input" name="userid" placeholder="Unique Username" required>
+                <input type="password" class="input" name="pass" placeholder="password" required>
+                <input type="password" class="input" name="cpass" placeholder="confirm password" required>
+                <button type="submit" class="gap" style="margin: 20px; padding : 10px">
+                    Register
+                </button>
+            </form>
+        </div>
+      <script>
+          var x = document.getElementById('first')
+          var y = document.getElementById('second')
+
+          function login(params) {
+            x.style.display='block'  
+            y.style.display='none';
+            }
+            function register(params) {
+            y.style.display='block'  
+            x.style.display='none';
+            }
+            window.onload = function() {
+            y.style.display = 'none';
+        };
+      </script>
+    <!-- <img src="/images/pexels-burak-k-187041.jpg" height="800px" width="1100px" alt="">  -->
+    <!-- <script src="temp.js"></script> -->
+</body>
+</html>

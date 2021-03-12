@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Trainer</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+</head>
+<style>
+    /* body{  */
+        /* background-color: rgba(175, 12, 12, 0.945); */
+        /* background-image: url('/images/pexels-karolina-grabowska-4386404.jpg');   */
+        /* background-size: 100%;  */
+    /* } */
+    .container{
+        margin-left: 150px;
+        margin-top: 40px;
+    }
+    .list{
+        display: inline;
+        margin: 20px;
+        padding: 7px;
+        border: solid black 5px;
+        border-radius: 10px;
+        font-size: 30px;
+        font-weight: bold;
+        background-color: white;
+        cursor: pointer;
+        color:black;
+    }
+    .list:hover{
+        color: rgb(235, 36, 36)
+    }
+    .rules{
+        margin-top: 40px;
+        margin-left: 100px;
+        padding: 15px;
+        font-size: 50px;
+        font-weight: lighter; 
+        font-family: 'Creepster', cursive;
+        color: white
+    }
+    .middle{
+        background-color: rgba(0, 0, 0, 0.774);
+    }
+    .features{
+        display: inline-block;
+        margin-left: 1000px;
+        width: 600px;
+        height: fit-content;
+        border: solid black 8px;
+        padding: 10px;
+        margin: 40px;
+        margin-left: 400px; 
+        text-align: center;
+    }
+
+    .feat{
+        display: block;
+        font-size: 30px;    
+        margin: 5px;
+        padding: 5px;
+        /* margin-left: 400px; */
+        text-align: center;
+        font-weight: bold;
+        color: rgb(216, 10, 10)
+    }
+    #backgroundImage{z-index: 1;} 
+
+#backgroundImage:before {
+   content: "";
+   position: absolute;
+   z-index: -1;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   background-image: url(/images/pexels-min-an-1629172.jpg);
+    /* background-repeat:repeat-y;  */
+    background-size: 100%; 
+    opacity: 0.4;
+    filter:alpha(opacity=40); 
+    height: 6000px;
+    width:100%;    
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+a:hover{
+    color: rgb(235, 36, 36)
+}
+.rate{
+    text-align: center;
+    margin-left: 200px;
+    margin-top: 50px;
+    border: solid black 5px;
+    border-radius: 10px;
+    padding: 10px;
+}
+.th{
+    margin: 12px;
+    padding: 9px;
+    /* font-weight: bold; */
+    /* color: white; */
+    /* background-color: black; */
+}
+.trow{
+    font-size: 25px;
+    font-family: 'Permanent Marker', cursive;
+    background-color: black;
+    color: white;
+}
+#search{
+    text-align: center;
+    margin-left: 50px;
+    margin-top: 60px;
+    height: 30px;
+    position: relative;
+    bottom: 5px;
+}
+.pad{
+    margin-left: 500px;
+    margin-top: 75px;
+    font-size: 25px;
+    padding: 5px;
+}
+
+</style>
+<body>
+    <div id="backgroundImage">
+
+    </div> 
+    <div class="container">
+        <ul class="ul1">
+            <li class="list"><a href="/">Home</a></li>
+            <li class="list"><a href="/login">Login/Register</a></li>
+            <li class="list" id="live"><a href="/Live" style="color: rgb(235, 36, 36);">Stock Rates</a></li>
+            <li class="list"><a href="/portfolio">Portfolio</a></li>
+            <li class="list"><a href="/friends">Friends Performance</a></li>
+        </ul>
+    </div>
+    <div class="pad" style="font: larger; color:white; background-color: black;font-family: 'Orbitron', sans-serif; display: inline"> Search Stocks : </div>
+    <input type="text" name="" id="search" placeholder="stock symbol">
+    <div>
+        <div>
+            <!-- <button>Refresh</button> -->
+        </div>
+        <!-- <form action="/" method="POST"> -->
+            <table class="rate" id="mytable">
+                <thead class="thead">
+                    <tr class="trow">
+                    <th class="th">Stock Symbol</th>
+                    <th class="th">Price as of</th>
+                    <th class="th">Current Price</th>
+                    <th class="th">Upper Bound</th>
+                    <th class="th">Lower Bound</th>
+                    <th class="th">Previous Close</th>
+                    <!-- <th class="th">Gender</th> -->
+                    </tr>
+                </thead>
+                <tbody id="maininfo">
+                    <%for(var i=0;i<data.length;i++){ %> 
+                    <tr >  
+                      <td class="th" style="font-weight: bold; font-size: larger;font-family: 'IBM Plex Mono', monospace;"><%=data[i].Scripname%> </td>  
+                      <td class="th"><%=data[i].CurrDate%> </td>  
+                      <td class="th" style="font-weight: bold; font-size: larger;"><%=data[i].CurrVal%> </td> 
+                      <td class="th"><%=data[i].HighVal%> </td> 
+                      <td class="th"><%=data[i].LowVal%> </td> 
+                      <td class="th"><%=data[i].PrevClose%> </td> 
+                    </tr>
+                    <%}%> 
+                </tbody>
+            </table>
+    </div>
+    <script>
+        document.getElementById('search').addEventListener("keyup",()=>{
+            let filter = document.getElementById('search').value.toLowerCase();
+            console.log(filter);
+            let table = document.getElementById('mytable');
+            let tr = table.getElementsByTagName('tr');
+
+            for(var i=1;i<tr.length;i++)
+            {
+                let td = tr[i].getElementsByTagName('td')[0];
+                if(td)
+                {
+                    let name = td.textContent || td.innerHTML;
+
+                    if(name.toLowerCase().indexOf(filter) > -1)
+                    {
+                        tr[i].style.display="";
+                    }
+                    else{
+                        tr[i].style.display="none";
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>
