@@ -94,19 +94,20 @@ a:hover{
 .login{
     width: 400px;
     /* background: #ffff; */
-    margin-top: 120px;
-    margin-left: 250px;
+    margin-top: 150px;
+    margin-left: 500px;
     height: fit-content;
     border: solid black 8px;
-    padding: 10px;
     text-align: center;
 }
 .input{
-    margin: 15px;
-    padding: 4px;
+    padding: 3px;
+    color: black;
+    /* background-color: crimson; */
     display: block;
-    margin-left: 120px;
-    margin-top: 22px;
+    margin-left: 26px;
+    margin-top: 28px;
+    font-size: 24px;
     text-align: center;
 }
 .register{
@@ -125,6 +126,16 @@ a:hover{
     font-style: italic;
     font-weight: bolder;
 }
+.under{
+    background-color:white;
+    color: rgb(65, 7, 80);
+    padding: 4px;
+    border: 4px solid black;
+    border-radius: 6px;
+    font-weight: bolder;
+    margin-left: 10px;
+    font-family: 'Times New Roman', Times, serif;
+}
 </style>
 <body>
     <div id="backgroundImage">
@@ -132,67 +143,31 @@ a:hover{
     </div> 
     <!-- <div class="container">
         <ul class="ul1">
-            <li class="list"><a href="/" style="color:  rgb(235, 36, 36);"> Home</a></li>
+            <li class="list"><a href="/">Home</a></li>
             <li class="list"><a href="/Live">Stock Rates</a></li>
             <li class="list"><a href="/portfolio">Portfolio</a></li>
             <li class="list"><a href="/transaction">Transactions</a></li>
             <li class="list"><a href="/friends">Friends Performance</a></li>
         </ul>
     </div> -->
-    <div class="middle">
-    <div class="rules">
-        Welcome to stock trainer, place for practising investment!
+    <div> 
     </div>
+    <div class="login">
+        <form action="/buy" id="first" method="POST">
+            <label for="userid"></label>
+            <input style="margin-left: 50px;" type="text" name ="userid" class="input" value="<%= userid %>" readonly>
+            <label for="stockname"></label>
+            <input style="margin-left: 50px;" type="text" name ="stockname" class="input" value="<%= stockname %>" readonly>
+            <label for="currval"></label>
+            <input style="margin-left: 50px;" type="text" name ="currval" class="input" value="<%= currval %>" readonly>
+            <label for="quantity"></label>
+            <input style="margin-left: 50px;" type="number" name ="quantity" class="input" placeholder="Enter Quantiy to buy"required>
+            <button type="submit" class="gap" style="margin: 25px; padding : 8px; font-size: larger;">
+                BUY
+            </button>
+        </form>
     </div>
-        <div class="features" >
-            <h1>FEATURES</h1> 
-            <ul>
-                <li class="feat">~ Register with unique id and get 10 Lakh virtual rupees for investment.</li>
-                <li class="feat">~ Get live rates of top 100 stocks of Bombay Stock Exchange(BSE).</li>
-                <li class="feat">~ Check your portfolio and history of all the transactions</li>
-                <li class="feat">~ Add and compete with friends</li>
-            </ul>
-        </div>
-        <div class="login" style="display: inline-block">
-            <button type="button" class="toggle" onclick="login()">LOGIN</button>
-            <button type="button" class="toggle" onclick="register()">REGISTER</button>
-            <form action="/login" id="first" method="POST">
-                <label for="userid"></label>
-                <input type="text" name="userid" class="input" placeholder="your username" required>
-                <label for="password"></label>
-                <input type="password" name ="password" class="input" placeholder="your password" required>
-                <button type="submit" class="gap" style="margin: 20px; padding : 10px">
-                    Login
-                </button>
-            </form>
-            
-            <form action="/register" id="second" method="POST"> 
-                <input type="text" class="input"  name="name" placeholder="Name" required>
-                <input type="text" class="input"  name="userid" placeholder="Unique Username" required>
-                <input type="password" class="input" name="password" placeholder="password" required>
-                <input type="password" class="input" name="cpassword" placeholder="confirm password" required>
-                
-                <button type="submit" class="gap" style="margin: 20px; padding : 10px">
-                    Register
-                </button>
-            </form>
-        </div>
-      <script>
-          var x = document.getElementById('first')
-          var y = document.getElementById('second')
-
-          function login(params) {
-            x.style.display='block'  
-            y.style.display='none';
-            }
-            function register(params) {
-            y.style.display='block'  
-            x.style.display='none';
-            }
-            window.onload = function() {
-            y.style.display = 'none';
-        };
-      </script>
+    
     <!-- <img src="/images/pexels-burak-k-187041.jpg" height="800px" width="1100px" alt="">  -->
     <!-- <script src="temp.js"></script> -->
 </body>

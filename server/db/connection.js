@@ -3,7 +3,8 @@ const mongoose= require('mongoose');
 const connectdb = async()=>{
     try {
         // mongodb connection String..
-        const con = await mongoose.connect('mongodb+srv://admin:admin123@cluster0.yo6ew.mongodb.net/stock?retryWrites=true&w=majority',
+        // mongodb+srv://admin:<password>@cluster0.yo6ew.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+        const con = await mongoose.connect('mongodb+srv://admin:admin@cluster0.yo6ew.mongodb.net/stock?retryWrites=true&w=majority',
             {
                 useNewUrlParser: true,
                 useCreateIndex: true,

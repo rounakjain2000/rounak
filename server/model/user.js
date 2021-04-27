@@ -4,14 +4,14 @@ var schema = new mongoose.Schema({
         type : String,
         required : true
     },
-    userid: {
+    userid:{
         type : String,
         unique: true,
         required : true
     },
     password:{
         type : String,
-        required: true
+        // required: true
     },
     // confirmpass:{
     //     type : String,
@@ -23,7 +23,7 @@ var schema = new mongoose.Schema({
     },
     cash :{
         type: Number,
-        default: 500000
+        default: 1000000
     },
     since:{
         type: Date,
@@ -31,6 +31,6 @@ var schema = new mongoose.Schema({
     }
 })
 
-const user = mongoose.model('userdb',schema);
+const userdb = mongoose.model('userdb',schema);
 
-module.exports= user;
+module.exports= userdb;

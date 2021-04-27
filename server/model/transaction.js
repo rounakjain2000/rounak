@@ -1,11 +1,8 @@
 const mongoose = require('mongoose');
 var schema = new mongoose.Schema({
-    date:{
-        type: Date
-    },
-    username: {
+    userid: {
         type : String,
-        unique: true,
+        // unique: true,
         required : true
     },
     stockName : {
@@ -20,6 +17,10 @@ var schema = new mongoose.Schema({
     },
     type:{
         type: String
+    },
+    date:{
+        type: Date,
+        default : Date.now
     }
 })
 

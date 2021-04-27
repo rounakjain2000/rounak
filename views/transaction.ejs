@@ -14,6 +14,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Orbitron:wght@600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300&display=swap" rel="stylesheet">
 </head>
 <style>
     /* body{  */
@@ -89,7 +91,7 @@
     background-size: 100%; 
     opacity: 0.4;
     filter:alpha(opacity=40); 
-    height: 6000px;
+    height: 2000px;
     width:100%;    
 }
 a{
@@ -101,7 +103,7 @@ a:hover{
 }
 .rate{
     text-align: center;
-    margin-left: 130px;
+    margin-left: 250px;
     margin-top: 50px;
     border: solid black 5px;
     border-radius: 10px;
@@ -129,7 +131,7 @@ a:hover{
     bottom: 5px;
 }
 .pad{
-    margin-left: 400px;
+    margin-left: 420px;
     margin-top: 75px;
     font-size: 25px;
     padding: 5px;
@@ -142,13 +144,15 @@ a:hover{
     </div> 
     <div class="container">
         <ul class="ul1">
-            <!-- <li class="list"><a href="/">Home</a></li> -->
-            <li class="list" id="live"><a href="/Live" style="color: rgb(235, 36, 36);">Stock Rates</a></li>
-            <li class="list"><a href="/transaction?userid=<%=user.userid%> ">Transactions</a></li>
-            <li class="list"><a href="/portfolio?userid=<%=user.userid%>">Portfolio</a></li>
-            <li class="list"><a href="/friends">Friends Performance</a></li>
+            <!-- <li class="list"><a href="/">Home</a></li>
+            <li class="list" id="live"><a href="/Live" style="color: rgb(235, 36, 36);">Stock Rates</a></li> -->
+            <!-- <li class="list"><a href="/transaction?userid">Transactions</a></li> -->
+            <!-- <li class="list"><a href="/portfolio">Portfolio</a></li>
+            <li class="list"><a href="/friends">Friends Performance</a></li> -->
         </ul>
     </div>
+    <div class="pad" style="font-size: 30px;font-family: 'Noto Serif JP', serif; color: orangered; background-color:black; margin-left: 520px; display: inline"> Transactions of: <%= user %>  </div>
+    <br>
     <div class="pad" style="font: larger; color:white; background-color: black;font-family: 'Orbitron', sans-serif; display: inline"> Search Stocks : </div>
     <input type="text" name="" id="search" placeholder="stock symbol">
     <div>
@@ -161,25 +165,21 @@ a:hover{
                 <thead class="thead">
                     <tr class="trow">
                     <th class="th">Stock Symbol</th>
-                    <th class="th">Price as of</th>
-                    <th class="th">Current Price</th>
-                    <th class="th">Upper Bound</th>
-                    <th class="th">Lower Bound</th>
-                    <th class="th">Previous Close</th>
+                    <th class="th">Quantity</th>
+                    <th class="th">Price</th>
+                    <th class="th">Type</th>
+                    <th class="th">When</th>
                     <!-- <th class="th">Gender</th> -->
                     </tr>
                 </thead>
                 <tbody id="maininfo">
-                    <%for(var i=0;i<data.length;i++){ %> 
-                    <tr >  
-                      <td class="th" style="font-weight: bold; font-size: larger;font-family: 'IBM Plex Mono', monospace;"><%=data[i].Scripname%> </td>  
-                      <td class="th"><%=data[i].CurrDate%> </td>  
-                      <td class="th" style="font-weight: bold; font-size: larger;"><%=data[i].CurrVal%> </td> 
-                      <td class="th"><%=data[i].HighVal%> </td> 
-                      <td class="th"><%=data[i].LowVal%> </td> 
-                      <td class="th"><%=data[i].PrevClose%> </td> 
-                      <td class="th"><a href="/buy?stock=<%=data[i].Scripname%>&currval=<%= data[i].CurrVal %> &user=<%=user.userid%>">BUY</a></td>
-                      <td class="th"><a href="/sell?stock=<%=data[i].Scripname%>&currval=<%= data[i].CurrVal %> &user=<%=user.userid%>">SELL</a></td>
+                    <%for(var i=0;i<transaction.length;i++){ %> 
+                    <tr>  
+                        <td class="th" style="font-weight: bold; font-size: larger;"><%=transaction[i].stockName%> </td> 
+                      <td class="th" style="font-weight: bold; font-size: larger;"><%=transaction[i].quantity%> </td> 
+                      <td class="th"><%=transaction[i].price%> </td> 
+                      <td class="th"><%=transaction[i].type%> </td> 
+                      <td class="th"><%=transaction[i].date%> </td>
                     </tr>
                     <%}%> 
                 </tbody>
