@@ -107,17 +107,21 @@ a:hover{
     border-radius: 10px;
     padding: 10px;
 }
+.bs{
+    font-weight: bolder;
+    font-family: 'Courier New', Courier, monospace;
+    background: rgb(38, 117, 141);
+    margin: 12px;
+    padding: 9px;
+}
 .th{
     margin: 12px;
     padding: 9px;
-    /* font-weight: bold; */
-    /* color: white; */
-    /* background-color: black; */
 }
 .trow{
     font-size: 25px;
     font-family: 'Permanent Marker', cursive;
-    background-color: black;
+    background-color: rgb(0, 0, 0);
     color: white;
 }
 #search{
@@ -134,7 +138,6 @@ a:hover{
     font-size: 25px;
     padding: 5px;
 }
-
 </style>
 <body>
     <div id="backgroundImage">
@@ -147,6 +150,7 @@ a:hover{
             <li class="list"><a href="/transaction?userid=<%=user.userid%> ">Transactions</a></li>
             <li class="list"><a href="/portfolio?userid=<%=user.userid%>">Portfolio</a></li>
             <li class="list"><a href="/friends">Friends Performance</a></li>
+            <li class="list"><a href="/logout">Logout</a></li>
         </ul>
     </div>
     <div class="pad" style="font: larger; color:white; background-color: black;font-family: 'Orbitron', sans-serif; display: inline"> Search Stocks : </div>
@@ -166,6 +170,8 @@ a:hover{
                     <th class="th">Upper Bound</th>
                     <th class="th">Lower Bound</th>
                     <th class="th">Previous Close</th>
+                    <th class="th">Buy</th>
+                    <th class="th">Sell</th>
                     <!-- <th class="th">Gender</th> -->
                     </tr>
                 </thead>
@@ -178,8 +184,8 @@ a:hover{
                       <td class="th"><%=data[i].HighVal%> </td> 
                       <td class="th"><%=data[i].LowVal%> </td> 
                       <td class="th"><%=data[i].PrevClose%> </td> 
-                      <td class="th"><a href="/buy?stock=<%=data[i].Scripname%>&currval=<%= data[i].CurrVal %> &user=<%=user.userid%>">BUY</a></td>
-                      <td class="th"><a href="/sell?stock=<%=data[i].Scripname%>&currval=<%= data[i].CurrVal %> &user=<%=user.userid%>">SELL</a></td>
+                      <td class="bs"><a href="/buy?stock=<%=data[i].Scripname%>&currval=<%= data[i].CurrVal %> &user=<%=user.userid%>">BUY</a></td>
+                      <td class="bs"><a href="/sell?stock=<%=data[i].Scripname%>&currval=<%= data[i].CurrVal %> &user=<%=user.userid%>">SELL</a></td>
                     </tr>
                     <%}%> 
                 </tbody>

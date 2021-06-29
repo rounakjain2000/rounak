@@ -77,7 +77,7 @@ const BSE = require('sharewatch').BSE;
         });
     }  
 app.get('/',(req,res)=>{
-    res.render('index.ejs');
+    res.render('index.ejs',{msg:"",type:""});
 })
 
 app.get('/live',(req,res)=>{
@@ -105,7 +105,7 @@ app.post('/register',(req,res)=>{
         // console.log(req.body);
         if(password!=cpassword)
         {
-            res.send('passwords not matching');
+            res.render('index.ejs',{msg:'Passwords do not match, register again',type:'danger'});
             // window.alert('passwords not matching!');
             errors.push({msg: 'passwords not matching!'});
         }
@@ -114,7 +114,7 @@ app.post('/register',(req,res)=>{
             .then(user=>{
                 if(user)
                 {
-                    res.send('UserId already exists!!');
+                    res.render('index.ejs',{msg:'username already exists!! Register again with different username',type:'danger'});
                 }
                 else{
                     const user = new userdb({
@@ -130,7 +130,8 @@ app.post('/register',(req,res)=>{
                            user.password = hash;
                            user.save()
                            .then(user=>{
-                                 res.redirect('/')
+                                 res.render('index.ejs',{msg:'User registered succesfully, login to start your journey of investing!',
+                                 type: 'success'})  
                             //    res.render('index.ejs');
                            })
                            .catch(err=>{
@@ -144,6 +145,9 @@ app.post('/register',(req,res)=>{
             // new user, add it to the db!!
             // console.log(req.body.userid);
 })
+
+// passport login
+
 // app.post('/login', (req, res, next) => {
 //     passport.authenticate('local', {
 //       successRedirect: '/dashboard',
@@ -152,8 +156,10 @@ app.post('/register',(req,res)=>{
 //     })(req, res, next);
 //   });
 userdb = require('./server/model/user');
+
+// normal login (without passport...)
 app.post('/login',(req,res)=>{
-    // console.log(req.body);
+    // console.log(req.body);   
     let userid=req.body.userid;
     const password = req.body.password;
     // console.log(userid);
@@ -162,7 +168,7 @@ app.post('/login',(req,res)=>{
         // console.log(user);
         if(!user)
         {
-            res.send('no user with that userid!!');
+            res.render('index.ejs',{msg:'Incorrect username, try login again!!',type:'danger'});
         }
         else{
         bcrypt.compare(password,user.password,(err,ismatch)=>{
@@ -175,18 +181,26 @@ app.post('/login',(req,res)=>{
                 });
             }
             else{
-                res.send('password incorrect!!');
+                res.render('index.ejs',{msg:'Incorrect password, try login again!!',type:'danger'});
             }
         })
     }
     })
 })
-  // Logout
-  app.get('/logout', (req, res) => {
-    req.logout();
-    req.flash('success_msg', 'You are logged out');
-    res.redirect('/users/login');
-  });
+//   // passport  Logout
+//   app.get('/logout', (req, res) => {
+//     req.logout();
+//     req.flash('success_msg', 'You are logged out');
+//     res.redirect('/users/login');
+//   });
+
+//   Normal logout..
+app.get('/logout',(req,res)=>{
+    res.render('index.ejs',{
+        msg:'',
+        type:'info'
+    })
+})
 
 app.get('/buy',(req,res)=>{
    let sname = req.query.stock
@@ -202,9 +216,9 @@ app.get('/buy',(req,res)=>{
     });
 })
 
+app.post('/buy',(req,res)=>{
 var holding = require('./server/model/holding');
 var transdb = require('./server/model/transaction');
-app.post('/buy',(req,res)=>{
 let userid = req.body.userid;
 let currval = req.body.currval;
 let stockname = req.body.stockname;
@@ -223,11 +237,12 @@ userdb.findOne({userid:userid})
 .then(user=>{
     // console.log(user);
 cash = user.cash;
+let newcash = parseFloat(cash)-parseFloat(required);
+let newStockval = parseFloat(user.stockVal)+parseFloat(required)
 console.log('cash is '+cash);
 holding.findOne({userid:userid,stockname:stockname})
 .then(hainkya=>{
-    let newcash = parseFloat(cash)-parseFloat(required);
-    let newStockval = parseFloat(user.stockVal)+parseFloat(required)
+   
     console.log(newcash);
     console.log(newStockval);
     // console.log('type of req '+typeof(required));
@@ -253,7 +268,7 @@ holding.findOne({userid:userid,stockname:stockname})
 
             newtrans.save()
             .then()
-            .catch ();
+            .catch();
 
             console.log('suffcient funds aur nhi tha pehele se!!');
             userdb.updateOne({
@@ -264,10 +279,11 @@ holding.findOne({userid:userid,stockname:stockname})
                     cash: newcash
                 }
             }).then(up=>{
-
-            }).catch(err=>{
-
-            })
+                res.render('live.ejs',
+                {
+                    user,data
+                });
+            }).catch()
         }
     }
     else
@@ -319,8 +335,11 @@ holding.findOne({userid:userid,stockname:stockname})
                 cash: newcash
             }
         }).then(up=>{
-        }).catch(err=>{
-        })
+            res.render('live.ejs',
+            {
+                user,data
+            });    
+        }).catch()
     }
    }
 })
@@ -342,24 +361,22 @@ app.get('/sell',(req,res)=>{
  })
 
  app.post('/sell',(req,res)=>{
+    var holding = require('./server/model/holding');
+    var transdb = require('./server/model/transaction');
     let userid = req.body.userid;
     let currval = req.body.currval;
     let stockname = req.body.stockname;
     let quantity = req.body.quantity;
     let availquant;
     let gain = quantity*currval;
-    let newtrans = new transdb({
-        userid: userid,
-        stockName : stockname,
-        price : currval,
-        quantity: quantity,
-        type: "sell"
-    })                   
+   
 console.log('gain amount is '+gain);
 userdb.findOne({userid:userid})
 .then(user=>{
     // console.log(user);
 cash = user.cash;
+stockVal = user.stockVal
+
 holding.findOne({userid:userid,stockname:stockname})
 .then(hainkya=>{
     let newcash = parseFloat(cash)+parseFloat(gain);
@@ -380,9 +397,15 @@ holding.findOne({userid:userid,stockname:stockname})
         else
         {
             // sufficient shares to sell!!            
-        let buyprice = hainkya.price;
+        let buyprice =  hainkya.price;
         let newquant =  parseFloat(availquant)-parseFloat(quantity);
-        
+        let newtrans = new transdb({
+            userid: userid,
+            stockName : stockname,
+            price : currval,
+            quantity: quantity,
+            type: "sell"
+        })                   
         newtrans.save()
         .then()
         .catch();
@@ -391,22 +414,28 @@ holding.findOne({userid:userid,stockname:stockname})
             userid: userid
             },
             { $set:{
-                stockVal : newStockval,
+                stockVal : stockVal-buyprice*quantity,
                 cash: newcash
             }
-        }).then(up=>{
-        }).catch(err=>{
         })
-        if(newquant===0)
+        .then()
+        .catch()
+        console.log("new quant: "+newquant+"and type of newquant var is "+typeof(newquant))
+        if(newquant==0)
         {
-            holding.remove({
-                userid: userid,
-                stockname: stockname
+            holding.findOneAndDelete({userid: userid, stockname: stockname})
+            .then(hua=>{
+                res.render('live.ejs',
+                {
+                    user,data
+                });
             })
-            // delete from current holdings
+            .catch()
+            // console.log("do something......................................................................................")
         }
-        else{
-            holding.updateOne(
+        else
+        {
+        holding.updateOne(
                 {
                     userid: userid,
                     stockname: stockname
@@ -417,19 +446,24 @@ holding.findOne({userid:userid,stockname:stockname})
                 }
             }
             ).then(hua=>{
-                // console.log(hua);
+                res.render('live.ejs',
+                {
+                    user,data
+                });
             })
             .catch(err=>{
                 console.log('error');
             });
         }
-      }
+        }
    }
 })
 })
 })
-  transdb = require('./server/model/transaction');
+transdb = require('./server/model/transaction');
 app.get('/transaction',(req,res)=>{
+    var holding = require('./server/model/holding');
+    var transdb = require('./server/model/transaction');
     let userid = req.query.userid;
     console.log(userid);
   
@@ -450,6 +484,8 @@ app.listen(port,()=>{
     console.log('okay');
 });
 app.get('/portfolio',(req,res)=>{
+    var holding = require('./server/model/holding');
+var transdb = require('./server/model/transaction');
     let user;
     let userid = req.query.userid;
      console.log(userid);
